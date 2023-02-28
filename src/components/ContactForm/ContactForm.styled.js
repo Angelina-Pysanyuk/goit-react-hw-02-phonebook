@@ -24,8 +24,8 @@ export const ButtonWrapper = styled.div`
 `;
 
 export const ButtonAdd = styled.button`
-  width: 90px;
-  height: 50px;
+  width: 100px;
+  height: 65px;
   border: none;
   border-radius: 6px;
   color: #8b7e74;
