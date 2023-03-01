@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { ListWrapper, ListItem, DeleteButton } from './ContactList.styled';
 
-const ContactList = ({ contacts, onDelete, isFilter }) => {
+const ContactList = ({ getFilteredContacts, onDelete }) => {
+  const contacts = getFilteredContacts();
   return (
     <ListWrapper>
       <ul>
@@ -12,11 +13,9 @@ const ContactList = ({ contacts, onDelete, isFilter }) => {
               <span>
                 <span>{name}</span>: <span>{number}</span>
               </span>
-              {!isFilter && (
-                <DeleteButton type="button" onClick={() => onDelete(id)}>
-                  Delete
-                </DeleteButton>
-              )}
+              <DeleteButton type="button" onClick={() => onDelete(id)}>
+                Delete
+              </DeleteButton>
             </ListItem>
           );
         })}

@@ -16,34 +16,34 @@ export class App extends React.Component {
   };
 
   formSubmitHandler = data => {
-    const find = this.state.contacts.filter(({ name }) =>
-      name.toLowerCase().includes(data.name.toLowerCase())
+    const find = this.state.contacts.find(
+      ({ name }) => name.toLowerCase() === data.name.toLowerCase()
     );
-    if (find.length) {
+    if (find) {
       Notiflix.Notify.info(`${data.name} is already in contacts`);
       return;
     }
+
     this.setState(prevState => ({
       contacts: [...prevState.contacts, data],
     }));
   };
 
   filter = ({ target: { value } }) => {
-    if (!value) {
-      this.setState({ filter: '' });
-      return;
-    }
-    const filter = this.state.contacts.filter(({ name }) =>
-      name.toLowerCase().includes(value.toLowerCase())
-    );
-    this.setState(prevState => ({
-      filter: [...filter],
-    }));
+    this.setState({ filter: value });
   };
 
   handleDelete = idDelete => {
-    const filter = this.state.contacts.filter(({ id }) => id !== idDelete);
-    this.setState({ contacts: [...filter] });
+    this.setState(prevState => ({
+      contacts: [...prevState.contacts.filter(({ id }) => id !== idDelete)],
+    }));
+  };
+
+  getFilteredContacts = () => {
+    const { filter } = this.state;
+    return this.state.contacts.filter(({ name }) =>
+      name.toLowerCase().includes(filter.toLowerCase())
+    );
   };
 
   render() {
@@ -65,8 +65,7 @@ export class App extends React.Component {
 
         <Filter filter={this.filter} />
         <ContactList
-          contacts={this.state.filter || this.state.contacts}
-          isFilter={this.state.filter.length}
+          getFilteredContacts={this.getFilteredContacts}
           onDelete={this.handleDelete}
         />
       </div>

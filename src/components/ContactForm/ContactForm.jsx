@@ -11,14 +11,10 @@ import {
 } from './ContactForm.styled';
 
 class ContactForm extends Component {
-  constructor() {
-    super();
-    this.state = {
-      name: '',
-      number: '',
-      id: nanoid(),
-    };
-  }
+  state = {
+    name: '',
+    number: '',
+  };
 
   handleChange = event => {
     this.setState({
@@ -28,8 +24,8 @@ class ContactForm extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-
-    this.props.onSubmit(this.state);
+    const newState = { ...this.state, id: nanoid() };
+    this.props.onSubmit(newState);
 
     this.reset();
   };
